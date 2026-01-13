@@ -232,7 +232,7 @@ class Transformer(nn.Module):
 
         # 解码器：根据编码器的输出和目标语言输入生成预测
         self.decoder = Decoder(
-            tgt_vocab, d_model, n_heads, num_encoder_layers, d_ff, dropout, max_len
+            tgt_vocab, d_model, n_heads, num_decoder_layers, d_ff, dropout, max_len
         )
 
     def forward(self, src, tgt, src_mask=None, tgt_mask=None, memory_mask=None):
@@ -246,6 +246,7 @@ def generate_mask(size):
     # 生成上三角，不包含对角线
     mask = torch.triu(torch.ones(size, size), diagonal=1).bool()
     return mask == 0  # True为可见
+
 
 # ------------------ 验证 ------------------
 src_vocab = 10000  # 源语言词表大小
